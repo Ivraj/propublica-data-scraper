@@ -19,12 +19,15 @@ To find out more, check out [Propublica's Nonprofit Explorer API](https://projec
 
 ## Getting started
 
+### Running the script
+
 Once you've downloaded this directory, you simply need to populate the
 list_of_orgs.csv file with the ProPublica numbers of your desired
 organizations.  To obtain the ProPublica number, you must search for the
 desired non-profit in ProPublica's Non-Profit Explorer, go to the page for the
 desired org, and then copy down the number at the end of the url.  For example,
-Oxfam-America Inc.'s number is 237069110. The Non-Profit Explorer can be found
+[Oxfam-America Inc.'s](https://projects.propublica.org/nonprofits/organizations/237069110)
+number is 237069110. The Non-Profit Explorer can be found
 [here](https://projects.propublica.org/nonprofits/). 
 
 Once that's done, you can run the script by simply executing the following line...
@@ -33,6 +36,7 @@ Once that's done, you can run the script by simply executing the following line.
 python propublica.py
 ``` 
 
+### Default input/output files
 By default the script will use a file called `list_of_orgs.csv` from the
 current working directory as the source of ProPublica numbers. By default, the
 ouput of will be stored in a file called `final_data.csv` in the current
@@ -45,12 +49,16 @@ python propublica.py -i my_new_list.csv -o some_dir/my_new_output.csv
 
 Note that all file paths will be relative to the current working directory.
 
+### Specifying output fields
+
 By default the script will record data for every field currently supported.  If
 you'd like to record data for only specific fields, you can specify the desired
 fields with other args. For example, running `python propublica.py -tr` will
 tell the script to only scrape for the total revenue of the given
 organizations. For a comprehensive list of field options, execute `python
 propublica.py -h`
+
+### Testing the script
 
 One can test the script by running it with the example list included in this
 directory. Simply run the following command...
@@ -68,7 +76,7 @@ your own files. Have fun scraping!
 
 ## About
 
-These script were a part of the Harvard Open Data Project's Final Club Finances
+This script was a part of the Harvard Open Data Project's Final Club Finances
 Project. The [Harvard Open Data Project](http://harvard-open-data-project.github.io/),
 is a student-faculty collaboration dedicated to opening and analyzing Harvard
 data to empower our community members to improve campus life.
