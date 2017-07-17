@@ -44,12 +44,10 @@ def get_args():
     parser.add_argument("-i", "--input", help="Will specify the location of "
                         "the file with the list of organzation number. The "
                         "default location is list_of_orgs.csv in the current "
-                        "directory", default=LIST_OF_ORGS_FILE,
-                        action="store_true")
+                        "directory", default=LIST_OF_ORGS_FILE)
     parser.add_argument("-o", "--output", help="Will specify the location of "
                         "the output file. Default location is final_data.csv "
-                        "in the current directory", default=OUTPUT_FILE,
-                        action="store_true")
+                        "in the current directory", default=OUTPUT_FILE)
     parser.add_argument("-tr", "--totalrev", help="Will scrape for Total"
                         "Revenue", action="store_true")
     parser.add_argument("-te", "--totalexp", help="Will scrape for Total"
@@ -62,9 +60,12 @@ def get_args():
                         "Liabilities", action="store_true")
     parser.add_argument("-na", "--netass", help="Will scrape for Net"
                         "Assets", action="store_true")
-    parser.add_argument("-a", "--all", help="Will scrape for All"
-                        "Possible Fields", action="store_true")
+    parser.add_argument("-a", "--all", help="Will scrape for Net"
+                        "Assets", default=True, action="store_true")
     args = parser.parse_args()
+    if not (args.totalrev or args.totalexp or args.netinc or args.totalass or
+            args.totallia or args.netass):
+        args.all = True
     return args
 
 def create_header(args):
@@ -116,6 +117,7 @@ def parse_org_data(org_json):
     for filing in org_json["filings_with_data"]:
         filing_data = {}
         # TODO: Somehow factor out the fields
+        # TODO: Make is so it only searchs for fields specified. 
         filing_data["source"] = "Auto"
         filing_data["year"] = filing["tax_prd_yr"]
         filing_data["pdfurl"] = filing["pdf_url"]
@@ -138,7 +140,7 @@ def parse_org_data(org_json):
         filing_data["totlia"] = "NA"
         filing_data["netass"] = "NA"
         org_data["filings"][filing_data["year"]] = filing_data
-    return (org_data)
+    return org_data
 
 def write_org_data(org_data, args, write_function):
     """Takes a dict of org filings and writes it to csv"""
@@ -176,11 +178,11 @@ def main():
 
     args = get_args()
     header = create_header(args)
-    org_nums = get_list_of_orgs(LIST_OF_ORGS_FILE)
+    org_nums = get_list_of_orgs(args.input)
 
     incomplete_data = []
 
-    with open("final_data.csv", "wb") as csv_file:
+    with open(args.output, "wb") as csv_file:
         writer = csv.writer(csv_file, delimiter=",")
         # TODO: Find a way to better ensure header is synced with manualdata.csv
         writer.writerow(header)

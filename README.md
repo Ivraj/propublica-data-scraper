@@ -21,29 +21,59 @@ To find out more, go to Propublica's Nonprofit Explorer API here:
 ## Getting started
 
 Once one has downloaded this directory, they simply need to populate the
-list_of_orgs.csv with a list the desired organizations' ProPublica numbers. An
-organization's ProPublica number can be found
-[here](https://projects.propublica.org/nonprofits/). In order to obtain the
-ProPublica number, one must search for the desired non-profit, go to the
-page for the desired org, and then copy down the number at the end of the url.
-(e.g. Oxfam-America Inc.'s number is 237069110).
+list_of_orgs.csv file with the ProPublica numbers of the desired organizations.
+In order to obtain the ProPublica number, one must search for the desired
+non-profit in ProPublica's Non-Profit Explorer, go to the page for the desired
+org, and then copy down the number at the end of the url.  For example,
+Oxfam-America Inc.'s number is 237069110. The Non-Profit Explorer can be found
+[here](https://projects.propublica.org/nonprofits/). 
 
-To run the script, one simply has to execute `python propublica.py -a`. The
-`-a` option means that the script will record data for every field that it can.
-If one would like to record data for only specific fields, one can omit the
-`-a` option and specify particular fields. For example, running `python
-propublica.py -tr` will tell the script to only scrape for the total revenue of
-the specified organizations. For a comprehensive list of options, execute
-`python propublica.py -h`
+To run the script, one simply has to execute the following line...
+
+```
+python propublica.py
+```. 
+
+By default the script will use a file called `list_of_orgs.csv` from the
+current directory as the source of ProPublica numbers. By default, the ouput of
+will be stored in a file called `final_data.csv`. However, these default
+locations can be changed with the use of the `-i` and `-o` flags respectively,
+as shown in the following...
+
+```
+python propublica.py -i my_new_list.csv -o some_dir/my_new_output.csv
+```
+
+Note that all file paths will be relative to the current working directory.
+
+By default the script will record data for every field currently supported.  If
+one would like to record data for only specific fields, one can specify the
+desired fields with other args. For example, running `python propublica.py -tr`
+will tell the script to only scrape for the total revenue of the given
+organizations. For a comprehensive list of options, execute `python
+propublica.py -h`
+
+One can test the script by running it with the given example list. Simply run the
+following command...
+
+```
+python propublica.py -i example_list_of_orgs.csv -o example_final_data.csv
+```
+
+Now add the ProPublica numbers of your own orgs to list_of_orgs.csv, or specify
+your own files. Have fun scraping!
 
 ## About
 
-This is a project of the [Harvard Open Data Project](http://harvard-open-data-project.github.io/),
-a student-faculty collaboration dedicated to opening and analyzing Harvard data
-to empower our community members to improve campus life.
+These script were a part of the Harvard Open Data Project's Final Club Finances
+Project. The [Harvard Open Data Project](http://harvard-open-data-project.github.io/),
+is a student-faculty collaboration dedicated to opening and analyzing Harvard
+data to empower our community members to improve campus life.
 
 ##TODO
 
 - Add pictures to 'Getting Started' so that the directions are clearer. 
-- Update and integrate Jupyter/iPython notebook for easier prototying
-- Figure out a way to search for orgs without ProPublica numbers
+- Make Error Handling more specific in Main().
+- Improve the formatting of incomplete entries.
+- Update and integrate Jupyter/iPython notebook for easier prototying.
+- Figure out a way to search for orgs without ProPublica numbers.
